@@ -23,10 +23,10 @@ let next date =
     new_date_day = { year = date.year; month = date.month; day = date.day + 1;
                      hour = 0; minute = 0 }
   and 
-    new_date_month = { year = date.year; month = date.month + 1; day = 0;
+    new_date_month = { year = date.year; month = date.month + 1; day = 1;
                        hour = 0; minute = 0 }
   and 
-    new_date_year = { year = date.year + 1; month = 0; day = 0;
+    new_date_year = { year = date.year + 1; month = 1; day = 1;
                       hour = 0; minute = 0 }
   in
   if wellformed new_date_min then new_date_min else
