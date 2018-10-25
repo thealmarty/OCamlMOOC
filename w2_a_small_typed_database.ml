@@ -89,3 +89,25 @@ let proof_of_bug =
     {code = 0 ; contact = { name = "second" ; phone_number = (2,2,2,2)}} ;
     {code = 1 ; contact = { name = "first" ; phone_number = (1,1,1,1)}} ;
     {code = 2 ; contact = { name = "second" ; phone_number = (2,2,2,2)}} |];;
+
+let delete db contact =
+ let (status, db, contact) = search db contact in
+  if not status then (false, db, contact)
+  else
+    let cells i =
+      if db.contacts.(i).name = contact.name then
+        db.contacts.(db.number_of_contacts - 1)
+      else
+        db.contacts.(i) in
+    let db' = {
+        number_of_contacts = db.number_of_contacts - 1;
+        contacts = Array.init (Array.length db.contacts) cells
+      }
+    in
+    (true, db', contact);;
+
+let update db contact =
+  "Replace this string with your implementation." ;;
+
+let engine db { code ; contact } =
+  "Replace this string with your implementation." ;;
