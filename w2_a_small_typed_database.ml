@@ -137,4 +137,8 @@ let update db contact =
     aux 0;;
 
 let engine db { code ; contact } =
-  "Replace this string with your implementation." ;;
+  if code = 0 then insert db contact
+  else if code = 1 then delete db contact
+  else if code = 2 then search db contact
+  else if code = 3 then update db contact
+  else (false, db, nobody);;
