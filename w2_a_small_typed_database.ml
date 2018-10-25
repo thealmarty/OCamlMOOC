@@ -107,7 +107,34 @@ let delete db contact =
     (true, db', contact);;
 
 let update db contact =
-  "Replace this string with your implementation." ;;
+ if db.number_of_contacts >= Array.length db.contacts then
+    (false, db, nobody)
+  else
+    let rec aux idx =
+      if idx >= db.number_of_contacts then
+        let cells i =
+          if i = db.number_of_contacts then contact else db.contacts.(i)
+        in
+        let db' = {
+          number_of_contacts = db.number_of_contacts + 1;
+          contacts = Array.init (Array.length db.contacts) cells
+        }
+        in
+        (true, db', contact)
+      else if db.contacts.(idx).name = contact.name then
+        let cells i =
+          if i = idx then contact else db.contacts.(i)
+        in
+        let db' = {
+          number_of_contacts = db.number_of_contacts;
+          contacts = Array.init (Array.length db.contacts) cells
+        }
+        in
+        (true, db', contact)
+      else
+        aux (idx + 1)
+    in
+    aux 0;;
 
 let engine db { code ; contact } =
   "Replace this string with your implementation." ;;
