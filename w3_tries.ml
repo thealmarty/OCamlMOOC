@@ -43,4 +43,30 @@ let example =
 		 ('o', Trie (Some 7, []))]));
 	 ('A', Trie (Some 15, []))])
 
+let rec children_from_char m c =
+  match m with
+  |(x, t) :: tl -> if x = c then Some t else children_from_char tl c
+  |_ -> None;;
 
+let rec update_children m c t = 
+  if children_from_char m c = None then (c,t) :: m
+  else let rec update_t m c t = 
+         match m with
+         |(x, old_t) :: tl -> 
+             if x = c then (x, t) :: update_t tl c t 
+             else (x, old_t) :: update_t tl c t
+         |_ -> [] in
+    update_t m c t;;
+
+let rec lookup trie w =
+  match trie with
+  | Trie (key, (char, children) :: tl) -> 
+      let rec match_key trie string index = 
+        if index <= (String.length string - 1) then
+          if (string.[index] = char) then match_key children string (index + 1) 
+          else match tl with
+            | [] -> false
+            | _ -> match_key (Trie (key, tl)) w 0
+        else true in
+      if match_key trie w 0 then key else lookup children w
+  |_ -> None;;
