@@ -1,3 +1,16 @@
+(*
+The code of the mini-database example is given in the prelude.
+
+    You may have noticed that there is an error in the implementation of our database. This error leads to not finding users that should be in the database (because they have been added at some point, and not deleted since) after certain sequences of queries.
+1.    Find the bug and give a sequence of operations proof_of_bug of type query array that exhibits it when executed one after the other on an initially empty database.
+    The failure must be triggered by the last query.
+2.    To fix this bug, write a new version of delete that enforces the following invariant on the database, which is expected by the other functions.
+    All the contacts of a database db (and no others) should be stored in the array db.contacts between indexes 0 and db.number_of_contacts - 1 (inclusive).
+3.    Write a new function update : database -> contact -> (bool * database * contact) that either changes the number of an existing person or inserts a new contact. It should return true and the updated database if any of these two options succeeded, or false with the untouched database. The returned contact is not important, it is here just so the function has the same signature as the others.
+4.    Write an updated engine function that does an update when given a query with code 3, and uses your updated delete function.
+
+The given prelude*)
+
 (* A phone number is a sequence of four integers. *)
 type phone_number = int * int * int * int;;
 
