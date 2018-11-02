@@ -11,15 +11,13 @@ type 'a bt =
   | Node of 'a bt * 'a * 'a bt ;;
 
 let rec height t = 
-          match t with 
-            | Empty -> 0
-              | Node (Empty, y, Empty) -> 1
-                | Node (x, y, z) -> 
-                                      max (height x + 1) (height z + 1);;
+  match t with 
+    | Empty -> 0
+    | Node (x, y, z) -> 
+      max (height x + 1) (height z + 1);;
   
 let rec balanced t = 
-          match t with
-            | Empty -> true
-              | Node (x, y, z) -> 
-                                    if height x = height z then balanced x && balanced z
-                                          else false;;
+  match t with
+    | Empty -> true
+    | Node (x, y, z) -> 
+      if height x = height z then balanced x && balanced z                            else false;;
