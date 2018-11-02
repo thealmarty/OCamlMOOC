@@ -58,15 +58,23 @@ let rec update_children m c t =
          |_ -> [] in
     update_t m c t;;
 
-let rec lookup trie w =
+lookup_with_index trie w index =
   match trie with
-  | Trie (key, (char, children) :: tl) -> 
-      let rec match_key trie string index = 
-        if index <= (String.length string - 1) then
-          if (string.[index] = char) then match_key children string (index + 1) 
-          else match tl with
-            | [] -> false
-            | _ -> match_key (Trie (key, tl)) w 0
-        else true in
-      if match_key trie w 0 then key else lookup children w
-  |_ -> None;;
+  | Trie (key, ctc) -> 
+      if (index + 1 <= String.length w) then 
+        match (children_from_char ctc w.[index]) with
+        | Some trie -> lookup_with_index trie w (index + 1)
+        | None -> None
+      else key;;
+
+let rec lookup trie w =
+  lookup_with_index trie w 0;;
+
+let rec insert_with_index trie w v index = 
+  match trie with
+  | Trie (key, ctc) -> 
+      if (index + 1 <= String.length w) then
+        match (update_children ctc w.[index]) with
+        | 
+          | None -> 
+      else Trie (Some v, ctc)
