@@ -58,7 +58,7 @@ let rec update_children m c t =
          |_ -> [] in
     update_t m c t;;
 
-lookup_with_index trie w index =
+let rec lookup_with_index trie w index =
   match trie with
   | Trie (key, ctc) -> 
       if (index + 1 <= String.length w) then 
